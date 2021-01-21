@@ -3,35 +3,26 @@ package sortvisualiser.screens;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
 import sortvisualiser.MainApp;
 import sortvisualiser.SortArray;
 import sortvisualiser.algorithms.ISortAlgorithm;
 
-/**
- * The main class for the sort visualiser GUI
- *
- * @author Matt Hopson
- */
+
 public final class SortingVisualiserScreen extends Screen {
+   
+    private static final long serialVersionUID = 1L;
     private final SortArray sortArray;
     private final ArrayList<ISortAlgorithm> sortQueue;
 
-    /**
-     * Creates the GUI
-     * @param algorithms List of algorithms to run for visualisation
-     * @param playSounds Whether or not you want the algorithm to play sounds
-     * @param app The main application
-     */
-    public SortingVisualiserScreen(ArrayList<ISortAlgorithm> algorithms, boolean playSounds, MainApp app) {
+    public SortingVisualiserScreen(ArrayList<ISortAlgorithm> algorithms,  MainApp app) {
         super(app);
         setLayout(new BorderLayout());
-        sortArray = new SortArray(playSounds);
+        sortArray = new SortArray();
         add(sortArray, BorderLayout.CENTER);
         sortQueue = algorithms;
     }
+    
     
     private void longSleep() {
         try {
@@ -48,8 +39,7 @@ public final class SortingVisualiserScreen extends Screen {
     }
     
     public void onOpen() {
-        //This would block the EventDispatchThread, and so
-        //it must run on a worker thread
+        
         SwingWorker<Void, Void> swingWorker = new SwingWorker<Void,Void>() {
             @Override
             protected Void doInBackground() throws Exception {

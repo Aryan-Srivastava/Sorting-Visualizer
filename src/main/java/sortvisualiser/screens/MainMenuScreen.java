@@ -1,6 +1,5 @@
 package sortvisualiser.screens;
 
-import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -23,11 +22,9 @@ import sortvisualiser.MainApp;
 import sortvisualiser.algorithms.*;
 
 
-/**
- *
- * @author Matthew Hopson
- */
 public final class MainMenuScreen extends Screen {
+   
+    private static final long serialVersionUID = 1L;
     private static final Color BACKGROUND_COLOUR = Color.DARK_GRAY;
     private final ArrayList<AlgorithmCheckBox> checkBoxes;
     
@@ -76,26 +73,11 @@ public final class MainMenuScreen extends Screen {
         sortAlgorithmContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
         addCheckBox(new BubbleSort(),       sortAlgorithmContainer);
         addCheckBox(new SelectionSort(),    sortAlgorithmContainer);
-        addCheckBox(new CycleSort(),        sortAlgorithmContainer);
-        addCheckBox(new StoogeSort(),       sortAlgorithmContainer);
-        addCheckBox(new QuickSort(),        sortAlgorithmContainer);
-        addCheckBox(new PancakeSort(),      sortAlgorithmContainer);
-        addCheckBox(new MergeSort(),        sortAlgorithmContainer);
         addCheckBox(new InsertionSort(),    sortAlgorithmContainer);
-        addCheckBox(new HeapSort(),         sortAlgorithmContainer);
-        addCheckBox(new GnomeSort(),        sortAlgorithmContainer);
-        addCheckBox(new CountingSort(),     sortAlgorithmContainer);
-        addCheckBox(new RadixSort(),        sortAlgorithmContainer);
-        addCheckBox(new IterativeMergeSort(), sortAlgorithmContainer);
-        
-        JCheckBox soundCheckBox = new JCheckBox("Play Sounds");
-        soundCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-        soundCheckBox.setBackground(BACKGROUND_COLOUR);
-        soundCheckBox.setForeground(Color.WHITE);
-        
-        optionsContainer.add(soundCheckBox);
+        addCheckBox(new QuickSort(),        sortAlgorithmContainer);
+        addCheckBox(new MergeSort(),        sortAlgorithmContainer);
        
-        JButton startButton = new JButton("Begin Visual Sorter");
+        JButton startButton = new JButton("Start Sorting");
         startButton.addActionListener((ActionEvent e) -> {
             ArrayList<ISortAlgorithm> algorithms = new ArrayList<>();
             for (AlgorithmCheckBox cb : checkBoxes) {
@@ -104,11 +86,7 @@ public final class MainMenuScreen extends Screen {
                 }
             }
              app.pushScreen(
-                new SortingVisualiserScreen(
-                            algorithms, 
-                            soundCheckBox.isSelected(), 
-                            app
-                        ));
+                new SortingVisualiserScreen(algorithms, app));
         });
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         

@@ -9,11 +9,12 @@ import javax.swing.JPanel;
 
 import sortvisualiser.MainApp;
 
-/**
- * 
- * @author mhops
- */
+
 public abstract class Screen extends JPanel {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     protected MainApp app;
     
     public Screen(MainApp app) {

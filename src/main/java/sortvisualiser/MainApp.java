@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-/**
- * The main application point for controlling the program
- * @author Matthew Hopson
- */
 public class MainApp {
     private final JFrame window;
     
@@ -62,7 +58,7 @@ public class MainApp {
     }
     
     public static void main(String... args) {
-        System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty("sun.java2d", "true");
         SwingUtilities.invokeLater(() -> {
             new MainApp().start();
         });

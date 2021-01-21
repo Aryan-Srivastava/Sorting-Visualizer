@@ -14,19 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import sortvisualiser.algorithms.ISortAlgorithm;
 
-/**
- * The array that can be sorted
- *
- * @author mhops
- */
 public class SortArray extends JPanel {
+
+    private static final long serialVersionUID = 1L;
     public static final int DEFAULT_WIN_WIDTH = 1280;
     public static final int DEFAULT_WIN_HEIGHT = 720;
     private static final int DEFAULT_BAR_WIDTH = 5;
@@ -40,18 +36,13 @@ public class SortArray extends JPanel {
     
     private final int[] array;
     private final int[] barColours;
-    private int spinnerValue = 0;
     private String algorithmName = "";
     private ISortAlgorithm algorithm;
     private long algorithmDelay = 0;
     
-    private MidiSoundPlayer player;
     private JSpinner spinner;
-    private boolean playSounds;
 
-    private int arrayChanges = 0; // Number of changes to the array the current algorithm has taken so far
-
-    public SortArray(boolean playSounds) {
+    public SortArray() {
         setBackground(Color.DARK_GRAY);
         array = new int[NUM_BARS];
         barColours = new int[NUM_BARS];
@@ -59,8 +50,7 @@ public class SortArray extends JPanel {
             array[i] = i;
             barColours[i] = 0;
         }
-        player = new MidiSoundPlayer(NUM_BARS);
-        this.playSounds = playSounds;
+       
         spinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
         spinner.addChangeListener((event) -> {
             algorithmDelay = (Integer) spinner.getValue();
@@ -92,11 +82,7 @@ public class SortArray extends JPanel {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
-        if (playSounds) {
-            player.makeSound(value);
-        }
-        if (isStep) 
-            arrayChanges++;
+        
     }
 
     public void swap(int firstIndex, int secondIndex, long millisecondDelay, boolean isStep) {
@@ -120,13 +106,13 @@ public class SortArray extends JPanel {
     }
 
     public void shuffle() {
-        arrayChanges = 0;
+        
         Random rng = new Random();
         for (int i = 0; i < arraySize(); i++) {
             int swapWithIndex = rng.nextInt(arraySize() - 1);
             swap(i, swapWithIndex, 5, false);
         }
-        arrayChanges = 0;
+        
     }
 
     public void highlightArray() {
@@ -169,9 +155,8 @@ public class SortArray extends JPanel {
 			panelGraphics.addRenderingHints(renderingHints);
 			panelGraphics.setColor(Color.WHITE);
 			panelGraphics.setFont(new Font("Monospaced", Font.BOLD, 20));
-			panelGraphics.drawString(" Current algorithm: " + algorithmName, 10, 30);
+			panelGraphics.drawString("Current algorithm: " + algorithmName, 10, 30);
 			panelGraphics.drawString("Current step delay: " + algorithmDelay + "ms", 10, 55);
-			panelGraphics.drawString("     Array Changes: " + arrayChanges, 10, 80);
 
 			drawBars(panelGraphics);
 		} finally {
